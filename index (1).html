@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pitch Decks — SMB Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared/css/base.css" />
+
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .landing-hero {
+      padding: 8rem var(--space-lg) 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .landing-hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(6,193,103,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6,193,103,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 60% 70% at 50% 40%, black, transparent);
+    }
+
+    .landing-hero__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      background: rgba(6,193,103,0.1);
+      border: 1px solid rgba(6,193,103,0.3);
+      color: #06C167;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .landing-hero__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      color: #F5F5F0;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .landing-hero__sub {
+      font-size: 1rem;
+      color: #888880;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+
+    .decks-grid {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 0 var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .deck-card {
+      background: #111111;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .deck-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--card-accent, #06C167);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .deck-card:hover {
+      border-color: rgba(6,193,103,0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 24px rgba(6,193,103,0.08);
+    }
+
+    .deck-card:hover::before { transform: scaleX(1); }
+
+    .deck-card__logo {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(6,193,103,0.1);
+      border: 1px solid rgba(6,193,103,0.2);
+    }
+
+    .deck-card__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+    }
+
+    .deck-card__tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #06C167;
+    }
+
+    .deck-card__title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      color: #F5F5F0;
+    }
+
+    .deck-card__desc {
+      font-size: 0.85rem;
+      color: #888880;
+      line-height: 1.6;
+    }
+
+    .deck-card__stats {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .deck-card__stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .deck-card__stat-val {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #F5F5F0;
+    }
+
+    .deck-card__stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #444440;
+    }
+
+    .deck-card__arrow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .deck-card__arrow-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: #06C167;
+    }
+
+    .deck-card__arrow-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(6,193,103,0.1);
+      border: 1px solid rgba(6,193,103,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .deck-card:hover .deck-card__arrow-icon {
+      background: rgba(6,193,103,0.2);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 2rem var(--space-lg);
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: #444440;
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+
+  <div class="landing-hero">
+    <div class="landing-hero__bg"></div>
+    <div class="landing-hero__tag">SMB Portfolio · Pitch Decks</div>
+    <h1 class="landing-hero__title">PITCH<br>DECKS</h1>
+    <p class="landing-hero__sub">Presentaciones de análisis de cuentas, estrategia de portfolio y business reviews.</p>
+  </div>
+
+  <div class="decks-grid">
+    <!-- Uber Case -->
+    <a href="brands/uber-case" class="deck-card" style="--card-accent:#06C167">
+      <div class="deck-card__logo">🚗</div>
+      <div class="deck-card__meta">
+        <div class="deck-card__tag">Q2 2024 · SMB Account Manager</div>
+        <div class="deck-card__title">Uber Eats — Q2 Sprint Recovery</div>
+        <div class="deck-card__desc">Portfolio de 20 cuentas. Estrategia de recuperación en 30 días con foco en La Antojería.</div>
+      </div>
+      <div class="deck-card__stats">
+        <div class="deck-card__stat">
+          <span class="deck-card__stat-val">20</span>
+          <span class="deck-card__stat-label">Cuentas</span>
+        </div>
+        <div class="deck-card__stat">
+          <span class="deck-card__stat-val">+$224K</span>
+          <span class="deck-card__stat-label">ΔGB estimado</span>
+        </div>
+        <div class="deck-card__stat">
+          <span class="deck-card__stat-val">12</span>
+          <span class="deck-card__stat-label">Slides</span>
+        </div>
+      </div>
+      <div class="deck-card__arrow">
+        <span class="deck-card__arrow-text">Ver presentación</span>
+        <span class="deck-card__arrow-icon">→</span>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    SMB Portfolio Pitch Decks · Static Site · Vercel Deploy
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="shared/js/core.js"></script>
+  <script>
+    // Simple stagger entrance
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.from('.landing-hero__tag',   { opacity: 0, y: 20, duration: 0.7, ease: 'power2.out', delay: 0.2 });
+      gsap.from('.landing-hero__title', { opacity: 0, y: 60, duration: 1,   ease: 'power3.out', delay: 0.4 });
+      gsap.from('.landing-hero__sub',   { opacity: 0, y: 30, duration: 0.7, ease: 'power2.out', delay: 0.7 });
+      gsap.from('.deck-card',           { opacity: 0, y: 40, duration: 0.8, ease: 'power2.out', delay: 0.9, stagger: 0.15 });
+    });
+  </script>
+</body>
+</html>
